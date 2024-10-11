@@ -7,6 +7,6 @@
     "skipLibCheck": true,
     "outDir": "./dist"
   },
-  "include": ["server.ts"],
+  "include": ["src/index.ts"],
   "exclude": ["node_modules"]
 }
