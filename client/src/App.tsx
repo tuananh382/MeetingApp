@@ -3,7 +3,10 @@ import { io } from 'socket.io-client';
 import { v4 as uuidV4 } from 'uuid';
 import Peer from 'simple-peer';
 
-const socket = io('http://localhost:5000');
+const socket = io('http://localhost:8000', {
+  withCredentials: true,
+  transports: ['websocket', 'polling', 'flashsocket']
+});
 
 function App() {
   const [roomId, setRoomId] = useState<string>('');
@@ -36,7 +39,7 @@ function App() {
           peerRef.current.on('signal', (data) => {
             socket.emit('sending-signal', { userToSignal: userId, signal: data });
           });
-        
+
           peerRef.current.on('stream', (partnerStream) => {
             if (partnerVideo.current) {
               partnerVideo.current.srcObject = partnerStream;
@@ -71,11 +74,11 @@ function App() {
   return (
     <div className="App">
       <h1>Web Meeting App</h1>
-      <input 
-        type="text" 
-        placeholder="Enter Room ID" 
+      <input
+        type="text"
+        placeholder="Enter Room ID"
         value={roomId}
-        onChange={(e) => setRoomId(e.target.value)} 
+        onChange={(e) => setRoomId(e.target.value)}
       />
       <button onClick={joinRoom}>Join Room</button>
 

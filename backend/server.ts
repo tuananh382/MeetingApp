@@ -4,12 +4,18 @@ import { Server } from 'socket.io';
 
 const app = express();
 const server = http.createServer(app);
-const io = new Server(server);
+const io = new Server(server, {
+  cors: {
+    origin: "http://localhost:3000/",
+    methods: ["GET", "POST","PATCH","DELETE"],
+    credentials: true
+  }
+});
 
 const PORT = 8000;
 
 app.get('/', (req, res) => {
-  res.send('Web Meeting App is running');
+  res.send('Web Meeting App is running with cors');
 });
 
 io.on('connection', (socket) => {
