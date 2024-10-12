@@ -5,9 +5,12 @@ import VideoComponent from './components/VideoComponent';
 import ChatComponent from './components/ChatComponent';
 import ScreenShareComponent from './components/SreenShareComponent';
 import MembersListComponent from './components/MembersListComponent';
-import { useRoom } from './hook/useRoom';
+import { useRoom } from './hooks/useRoom'
 
-const socket = io('http://localhost:8000');
+const socket = io('http://localhost:8000', {
+  // withCredentials: true,
+  transports: ['websocket', 'polling', 'flashsocket']
+});
 
 const App: React.FC = () => {
   const { isConnected, joinRoom, leaveRoom, partnerStream, userStream, screenStream, shareScreen, stopSharingScreen } = useRoom(socket);

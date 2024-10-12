@@ -11,7 +11,7 @@ const ScreenShareComponent: React.FC<ScreenShareProps> = ({ onShareScreen, onSto
 
   const handleShareScreen = async () => {
     try {
-      const stream = await navigator.mediaDevices.getDisplayMedia({ video: true });
+      const stream = await navigator.mediaDevices.getDisplayMedia({ audio: true ,video: true });
       onShareScreen(stream);
       setIsSharing(true);
     } catch (error) {
