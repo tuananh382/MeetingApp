@@ -1,7 +1,8 @@
 # Ignore node_modules for the entire project
-/node_modules/
+node_modules/
 /client/node_modules/
 /backend/node_modules/
+.env
 
 # Ignore the Firebase folder
 .firebase
@@ -10,4 +11,6 @@
 /client/build
 
 # Ignore dist folder in backend
-/backend/dist
+/backend/dist/
+
+
