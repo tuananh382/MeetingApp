@@ -19,11 +19,14 @@ app.use(cors({
 
 const PORT = process.env.PORT || 8000;
 
+app.get('/', (req, res) => {
+  res.send('Meeting server is running')
+})
 
 io.on('connection', (socket) => {
   console.log('A user connected:', socket.id);
 
-  handleMeeting(socket, io);
+  // handleMeeting(socket, io);
 
   socket.on('disconnect', () => {
     console.log('A user disconnected:', socket.id);
