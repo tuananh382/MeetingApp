@@ -5,11 +5,10 @@ import VideoComponent from './components/VideoComponent';
 import ChatComponent from './components/ChatComponent';
 import ScreenShareComponent from './components/SreenShareComponent';
 import MembersListComponent from './components/MembersListComponent';
-import { useRoom } from './hooks/useRoom'
+import { useRoom } from './hooks/useRoom';
 
 const socket = io('http://localhost:8000', {
-  // withCredentials: true,
-  transports: ['websocket', 'polling', 'flashsocket']
+  transports: ['websocket', 'polling', 'flashsocket'],
 });
 
 const App: React.FC = () => {
@@ -43,22 +42,64 @@ const App: React.FC = () => {
     leaveRoom(id);
   };
 
+  const styles = {
+    container: {
+      display: 'flex',
+      flexDirection: 'column' as const,
+      justifyContent: 'center',
+      alignItems: 'center',
+      padding: '20px',
+      fontFamily: `'Arial', sans-serif`,
+    },
+    header: {
+      textAlign: 'center' as const,
+      marginBottom: '20px',
+    },
+    videoSection: {
+      display: 'flex',
+      justifyContent: 'center',
+      gap: '20px',
+      marginBottom: '20px',
+    },
+    chatSection: {
+      display: 'flex',
+      flexDirection: 'row' as const,
+      justifyContent: 'space-between',
+      width: '100%',
+      marginTop: '20px',
+    },
+    chat: {
+      flex: 2,
+      marginRight: '20px',
+    },
+    members: {
+      flex: 1,
+      marginLeft: '20px',
+    },
+  };
+
   return (
-    <div className="App">
-      <h1>Web Meeting</h1>
+    <div style={styles.container}>
+      <h1 style={styles.header}>Web Meeting</h1>
       <RoomComponent
         onJoin={handleJoinRoom}
         onLeave={handleLeaveRoom}
         isConnected={isConnected}
       />
-      <div className="videos" style={{ display: 'flex', flexDirection: 'row' }}>
+      <div style={styles.videoSection}>
         <VideoComponent stream={userStream} />
-        <VideoComponent stream={partnerStream} />
-        {screenStream && <VideoComponent stream={screenStream} />} 
+        {/* <VideoComponent stream={partnerStream} /> */}
+        {screenStream && <VideoComponent stream={screenStream} />}
       </div>
-      <MembersListComponent members={members} />
-      <ChatComponent roomId={roomId} userId={userId} socket={socket} />
-      <ScreenShareComponent onShareScreen={() => shareScreen(roomId)} onStopSharing={stopSharingScreen} />
+      <div style={styles.chatSection}>
+        <div style={styles.chat}>
+          <ChatComponent roomId={roomId} userId={userId} socket={socket} />
+        </div>
+        <div style={styles.members}>
+          <MembersListComponent members={members} />
+        </div>
+      </div>
+      {/* <ScreenShareComponent onShareScreen={() => shareScreen(roomId)} onStopSharing={stopSharingScreen} /> */}
     </div>
   );
 };
